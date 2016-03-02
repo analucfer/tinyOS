@@ -42,14 +42,14 @@
 
 <p>Añadimos dos repositorios donde se encuentran los paquetes necesarios. Para ello creamos el fichero /etc/apt/sources.list.d/tinyprod-debian.list y lo abrimos con cualquier editor <code>sudo vim /etc/apt/sources.list.d/tinyprod-debian.list</code> añadiendo las siguientes líneas:</p>
 
-<pre><code>deb http://tinyprod.net/repos/debian    squeeze     main
-deb http://tinyprod.net/repos/debian    msp430-46   main
+<pre><code>deb http://tinyprod.net/repos/debian squeeze main
+deb http://tinyprod.net/repos/debian msp430-46 main
 </code></pre>
 
 <p>Instalamos la clave de seguridad del repositorio:</p>
 
-<pre><code>gpg --keyserver keyserver.ubuntu.com    --recv-keys 34EC655A
-gpg -a  --export    34EC655A    |   sudo    apt-key add -
+<pre><code>gpg --keyserver keyserver.ubuntu.com --recv-keys 34EC655A
+gpg -a --export 34EC655A | sudo apt-key add -
 </code></pre>
 
 <p>Debe mostrar el mensaje 'OK' al finalizar. A veces es necesario cerrar y volver a abrir la terminal tras el paso anterior.</p>
@@ -57,7 +57,7 @@ gpg -a  --export    34EC655A    |   sudo    apt-key add -
 <p>Actualizamos los repositorios e instalamos los paquetes necesarios:</p>
 
 <pre><code>sudo    apt-get update
-sudo    apt-get install nesc    tinyos-tools    msp430-46   avr-tinyos
+sudo    apt-get install nesc tinyos-tools msp430-46 avr-tinyos
 </code></pre>
 
 <p>Descargamos TinyOS en el directorio que queramos, por ejemplo en /home/user/:</p>
@@ -75,11 +75,11 @@ rm -rf tinyos-2_1_2.tar.gz
 
 <pre><code>export  TOSROOT="/home/user/tinyos-main"
 export  TOSDIR="$TOSROOT/tos"
-export CLASSPATH=$CLASSPATH:$TOSROOT/support/sdk/java/tinyos.jar:.
+export  CLASSPATH=$CLASSPATH:$TOSROOT/support/sdk/java/tinyos.jar:.
 export  MAKERULES="$TOSROOT/support/make/Makerules"
 export  PYTHONPATH=$PYTHONPATH:$TOSROOT/support/sdk/python
 
-echo    "setting    up  TinyOS  source  path    to  $TOSROOT"
+echo "setting up TinyOS source path to $TOSROOT"
 </code></pre>
 
 <p>Para ello añadir lo anterior (modificando lo necesario) en el fichero .bashrc</p>
