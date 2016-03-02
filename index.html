@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Tinyos by carrodher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Tinyos</h1>
+      <h2 class="project-tagline">Proyectos y prácticas con tinyOS para TelosB</h2>
+      <a href="https://github.com/carrodher/tinyOS" class="btn">View on GitHub</a>
+      <a href="https://github.com/carrodher/tinyOS/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/carrodher/tinyOS/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="tinyos" class="anchor" href="#tinyos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>tinyOS</h1>
+
+<p>Proyectos y prácticas con tinyOS para TelosB como parte de la asignatura "Redes de Sensores y Sistemas Autónomos"</p>
+
+<h2>
+<a id="contenido" class="anchor" href="#contenido" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contenido</h2>
+
+<ul>
+<li><a href="#instalaci%C3%B3n">Instalación</a></li>
+<li><a href="#uso">Uso</a></li>
+</ul>
+
+<h2>
+<a id="instalación" class="anchor" href="#instalaci%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instalación</h2>
+
+<p>Añadimos dos repositorios donde se encuentran los paquetes necesarios. Para ello creamos el fichero /etc/apt/sources.list.d/tinyprod-debian.list y lo abrimos con cualquier editor <code>sudo vim /etc/apt/sources.list.d/tinyprod-debian.list</code> añadiendo las siguientes líneas:</p>
+
+<pre><code>deb http://tinyprod.net/repos/debian    squeeze     main
+deb http://tinyprod.net/repos/debian    msp430-46   main
+</code></pre>
+
+<p>Instalamos la clave de seguridad del repositorio:</p>
+
+<pre><code>gpg --keyserver keyserver.ubuntu.com    --recv-keys 34EC655A
+gpg -a  --export    34EC655A    |   sudo    apt-key add -
+</code></pre>
+
+<p>Debe mostrar el mensaje 'OK' al finalizar. A veces es necesario cerrar y volver a abrir la terminal tras el paso anterior.</p>
+
+<p>Actualizamos los repositorios e instalamos los paquetes necesarios:</p>
+
+<pre><code>sudo    apt-get update
+sudo    apt-get install nesc    tinyos-tools    msp430-46   avr-tinyos
+</code></pre>
+
+<p>Descargamos TinyOS en el directorio que queramos, por ejemplo en /home/user/:</p>
+
+<pre><code>cd /home/user/
+wget http://github.com/tinyos/tinyos-release/archive/tinyos-2_1_2.tar.gz
+tar xf  tinyos-2_1_2.tar.gz
+mv  tinyos-release-tinyos-2_1_2 tinyos-main
+rm -rf tinyos-2_1_2.tar.gz
+</code></pre>
+
+<p>De esta manera tenemos el directorio /home/user/tinyos-main con todo lo necesario.</p>
+
+<p>Configuramos el entorno</p>
+
+<pre><code>export  TOSROOT="/home/user/tinyos-main"
+export  TOSDIR="$TOSROOT/tos"
+export CLASSPATH=$CLASSPATH:$TOSROOT/support/sdk/java/tinyos.jar:.
+export  MAKERULES="$TOSROOT/support/make/Makerules"
+export  PYTHONPATH=$PYTHONPATH:$TOSROOT/support/sdk/python
+
+echo    "setting    up  TinyOS  source  path    to  $TOSROOT"
+</code></pre>
+
+<p>Para ello añadir lo anterior (modificando lo necesario) en el fichero .bashrc</p>
+
+<pre><code>locate .bashrc
+vim /home/user/.bashrc
+</code></pre>
+
+<p>Conviene cerrar y volver a abrir la terminal en este punto.</p>
+
+<p>Para obtener acceso al puerto serie: <code>sudo gpasswd -a &lt;your user&gt; dialout</code>. Tras esto hay que cerrar sesión de Ubuntu y volver a entrar para que haga efecto.</p>
+
+<p>Para comprobar la instalación ejecutamos el siguiente comando: <code>tos-check-env</code>. Si todo ha ido bien deberán aparecer únicamente dos warnings, uno debido a la versión de Java y otro a la de graphviz, debido a que generalmente la versión instalada es superior a la requerida por TinyOS.</p>
+
+<h2>
+<a id="uso" class="anchor" href="#uso" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Uso</h2>
+
+<p>Para hacer una prueba de funcionamiento nos situamos en el directorio /home/user/tinyos-main/apps/tutorials/BlinkFail, compilamos y cargamos este programa en un dispositivo TelosB previamente conectado.</p>
+
+<p>Primero comprobamos que el dispositivo es reconocido correctamente: <code>motelist</code></p>
+
+<p>Por último, compilamos y cargamos el ejemplo BlinkFail en el dispositivo:</p>
+
+<pre><code>cd /home/user/tinyos-main/apps/tutorials/BlinkFail
+make telosb install,ID
+</code></pre>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/carrodher/tinyOS">Tinyos</a> is maintained by <a href="https://github.com/carrodher">carrodher</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
